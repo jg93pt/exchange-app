@@ -14,12 +14,12 @@ class Exchange extends React.Component {
 
     return (
       <div className="container">
-        <div className="row">
-          <div className="col-12 text-center">
-            <p>Hello</p>
-          </div>
+      <div className="row mt-5">
+        <div className="col-12 mt-5 text-center">
+        <h1>Exchange Rate</h1>
         </div>
       </div>
+    </div>
     )
   }
 }

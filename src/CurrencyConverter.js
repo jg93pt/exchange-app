@@ -14,9 +14,9 @@ class Currency extends React.Component {
 
     return (
       <div className="container">
-        <div className="row">
-          <div className="col-12 text-center">
-            <p>Hello</p>
+        <div className="row mt-5">
+          <div className="col-12 mt-5 text-center">
+          <h1 class="sm-screen">Currency Converter</h1>
           </div>
         </div>
       </div>

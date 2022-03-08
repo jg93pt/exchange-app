@@ -1,0 +1,17 @@
+@media  (max-width: 767px) {
+  .sm-screen{
+    margin-top: 50px;
+  }
+}
+.navbar-nav > .nav-item > .active > h5 {
+  color: #36d1dc!important;
+  font-weight: bold!important;
+}
+#title-color{
+  color: #36d1dc;
+}
+
+
+
+
+
