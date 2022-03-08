@@ -1,26 +1,21 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import logo from './logo.svg';
+import CurrencyConverter from './CurrencyConverter';
+import ExchangeRate from './ExchangeRate';
+
 import './App.css';
 
-function App() {
+
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-        <code>Hello World!</code>
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <nav className="navbar navbar-expand-lg navbar-white bg-white">
+        <Link className="navbar-brand col-12 text-center" to="/"><h3 class="customColor">Exchange App</h3></Link>
+      </nav>
+        <Route path="/" exact component={CurrencyConverter} />
+        <Route path="/" component={ExchangeRate} />
+    </Router>
   );
 }
 
