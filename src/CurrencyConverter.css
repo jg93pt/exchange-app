@@ -1,3 +1,4 @@
+/*Main-content Currency Converter*/
 @media  (max-width: 767px) {
   .sm-screen{
     margin-top: 50px;
@@ -28,22 +29,27 @@
   }
 }
 
-.focus-item {
-  color: #36d1dc!important;
-  font-weight: bold!important;
-}
-#title-color{
-  color: #36d1dc;
-  font-weight:lighter;
-}
-
-h1, h5{
+h1, .main-content-subtitle{
   color: white;
   font-weight: bolder;
 }
 
+label{
+  font-weight: bold;
+}
 
+#exchange-button{
 
+  background: #5B86E5;
+  border:1px solid #36D1DC;
+  border-radius: 10px;
+}
 
+#exchange-button:hover{
+  background: #36D1DC;
+}
 
+#hide-label{
+  visibility: hidden;
+}
 

@@ -31,7 +31,7 @@ class App extends Component {
   render () {
   return (
     <Router>
-    <nav className="navbar navbar-expand-md navbar-light shadow p-3 mb-5 bg-body rounded fixed-top">
+    <nav className="navbar navbar-expand-md navbar-light shadow p-3 mb-5 rounded fixed-top" id="navColor">
       <div className="container-fluid ms-5">
         <div id="navbarNav">
           <ul className="navbar-nav">
@@ -39,7 +39,7 @@ class App extends Component {
               <Link className="nav-link" aria-current="page" id="navbar-text" to="/CurrencyConverter"><h5 id="title-color" className={`${this.state.flag ? 'focus-item' : ''}`}>Currency Converter</h5></Link>
             </li>
             <li className="nav-item" onClick={this.handleClickExchange}>
-              <Link className="nav-link" id="navbar-text" to="/ExchangeRate"><h5 id="title-color" className={`${this.state.flag ? '' : 'focus-item'}`}>Exchange Rate</h5></Link>
+              <Link className="nav-link" aria-current="page" id="navbar-text" to="/ExchangeRate"><h5 id="title-color" className={`${this.state.flag ? '' : 'focus-item'}`}>Exchange Rate</h5></Link>
             </li>
           </ul>
         </div>

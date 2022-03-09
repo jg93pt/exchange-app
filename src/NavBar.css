@@ -1,0 +1,30 @@
+/*NavBar*/
+#navColor{
+  background-color: #5B86E5;
+
+}
+#navbarNav > ul > li:hover {
+  background: #36D1DC;
+  border-radius: 10px;
+}
+
+.focus-item {
+  color: #fff!important;
+  font-weight: bold!important;
+}
+#title-color{
+  color: #fff;
+  font-weight:lighter;
+}
+
+
+
+
+
+
+
+
+
+
+
+
