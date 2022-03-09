@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+<<<<<<< HEAD
 import CurrencyConverter from './CurrencyConverter';
 import ExchangeRate from './ExchangeRate';
 
+=======
+>>>>>>> master
 import './App.css';
 
 // For nav menu items
@@ -30,6 +33,7 @@ class App extends Component {
 
   render () {
   return (
+<<<<<<< HEAD
     <Router>
     <nav className="navbar navbar-expand-md navbar-light shadow p-3 mb-5 rounded fixed-top" id="navColor">
       <div className="container-fluid ms-5">
@@ -49,6 +53,15 @@ class App extends Component {
         <Route path="/CurrencyConverter" exact component={CurrencyConverter} />
         <Route path="/ExchangeRate" component={ExchangeRate} />
     </Router>
+=======
+    <div className="App">
+      <header className="App-header">  
+        <p>
+        Hello World!
+        </p>
+      </header>
+    </div>
+>>>>>>> master
   );
 }
 }
