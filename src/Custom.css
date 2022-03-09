@@ -2,14 +2,46 @@
   .sm-screen{
     margin-top: 50px;
   }
+
+  .main-page-title{
+    margin-top:70px;
+  }
+
+  #no-sm{
+    display: none;
+  }
 }
-.navbar-nav > .nav-item > .active > h5 {
+
+@media (min-width: 768px) {
+  .main-page-title{
+  margin-top: 100px;
+  }
+
+  #only-sm{
+    display: none;
+  }
+
+  #title-div{
+    background: #36D1DC;
+    background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);
+    background: linear-gradient(to right, #5B86E5, #36D1DC);
+  }
+}
+
+.focus-item {
   color: #36d1dc!important;
   font-weight: bold!important;
 }
 #title-color{
   color: #36d1dc;
+  font-weight:lighter;
 }
+
+h1, h5{
+  color: white;
+  font-weight: bolder;
+}
+
 
 
 
