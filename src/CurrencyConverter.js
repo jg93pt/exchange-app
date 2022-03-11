@@ -20,16 +20,15 @@ class Currency extends React.Component {
         </div>
         <div className='row mt-4'>
           <div className="d-flex flex-column bd-highlight mb-3">
-            <div className="container-xxl mt-1" id="no-sm">
-              <div className="row ms-1 me-1 shadow-lg p-3 bg-body rounded rounded-5 border border-1 border-dark" id="title-div">
-                <div className="col-xl-12">
+            <div className="container mt-1">
+              <div className="row ms-1 me-1 shadow-lg p-3 bg-body rounded-top border border-1 border-dark" id="title-div">
+                <div className="col-12">
                   <h5 className="text-center main-content-subtitle">EUR to USD</h5>
               </div>
         </div>
     </div>
-    <h5 className="text-center main-content-subtitle" id="only-sm">EUR to USD</h5>
     <div className="container-xxl">
-              <div className="row ms-1 me-1 shadow-lg p-3 mb-5 bg-body rounded rounded-5 border border-1 border-dark">
+              <div className="row ms-1 me-1 shadow-lg p-3 bg-body border-top border-1 border-dark" id="split-content">
                 <div className="col-lg-3">
                   <label>Amount</label>
                   <input type="number" className="form-control" min="0" defaultValue={1}/>
@@ -115,7 +114,12 @@ class Currency extends React.Component {
                 </select>
                     </div>
                 </div>
-          </div>
+                </div>
+                <div className='row ms-1 me-1 shadow-lg p-3 mb-5 bg-body rounded-bottom'>
+                  <h5 class="small-currency-title">1 AUD =</h5>
+                  <h3 class="big-currency-title mb-4">1.3024 BGN</h3>
+                  <h5 class="small-currency-title">1 BGN = 1.3024 BGN</h5>
+                </div>
       </div>
     </div>
   </div>
