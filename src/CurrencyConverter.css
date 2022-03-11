@@ -38,18 +38,26 @@ label{
   font-weight: bold;
 }
 
-#exchange-button{
+
+.exchange-button{
 
   background: #5B86E5;
-  border:1px solid #36D1DC;
   border-radius: 10px;
+  height: 88%;
 }
 
-#exchange-button:hover{
+.exchange-button:hover{
   background: #36D1DC;
 }
 
-#hide-label{
-  visibility: hidden;
+.exchange-button:focus{
+  background: #5B86E5;
 }
+
+.desktopIcon{
+  color:whitesmoke;
+}
+
+
+
 
