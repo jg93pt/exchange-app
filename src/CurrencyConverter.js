@@ -30,11 +30,11 @@ class Currency extends React.Component {
     <h5 className="text-center main-content-subtitle" id="only-sm">EUR to USD</h5>
     <div className="container-xxl">
               <div className="row ms-1 me-1 shadow-lg p-3 mb-5 bg-body rounded rounded-5 border border-1 border-dark">
-                <div className="col-md-3">
+                <div className="col-lg-3">
                   <label>Amount</label>
                   <input type="number" className="form-control" min="0" defaultValue={1}/>
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-lg-4">
                   <label>From</label>
                   <div className="dropdown">
                   <select className='form-select'>
@@ -73,10 +73,10 @@ class Currency extends React.Component {
                     </select>
                     </div>
                   </div>
-                  <div className='col-md-1 mt-4'>
+                  <div className='col-lg-1 mt-4'>
                     <button class="form-control exchange-button"><svg  stroke="currentColor" fill="currentColor" stroke-width="0" height="2em" viewBox="0 0 512 512" class="desktopIcon" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-linecap="square" stroke-miterlimit="10" stroke-width="32" d="M304 48l112 112-112 112m94.87-112H96m112 304L96 352l112-112m-94 112h302"></path></svg></button>
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-lg-4">
                   <label>To</label>
                   <div class="dropdown">
                   <select className='form-select'>
