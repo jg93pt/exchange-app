@@ -7,26 +7,22 @@
   .main-page-title{
     margin-top:70px;
   }
-
-  #no-sm{
-    display: none;
-  }
 }
 
 @media (min-width: 768px) {
   .main-page-title{
   margin-top: 100px;
   }
+}
 
-  #only-sm{
-    display: none;
-  }
+#title-div{
+  background: #36D1DC;
+  background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);
+  background: linear-gradient(to right, #5B86E5, #36D1DC);
+}
 
-  #title-div{
-    background: #36D1DC;
-    background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);
-    background: linear-gradient(to right, #5B86E5, #36D1DC);
-  }
+#split-content{
+  border-bottom: 1px solid #dee2e6 !important;
 }
 
 h1, .main-content-subtitle{
@@ -58,6 +54,14 @@ label{
   color:whitesmoke;
 }
 
+.small-currency-title{
+  opacity: 0.5;
+  font-size: medium;
+  font-weight: bold;
+}
 
+.big-currency-title{
+  font-weight: bold;
+}
 
 
