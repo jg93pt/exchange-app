@@ -1,59 +1,97 @@
 import React from 'react';
+import currencies from './Currencies';
 import { json, checkStatus } from './utils';
 
-class Currency extends React.Component {
+// Global variable for api link
+const host = 'api.frankfurter.app';
+
+class CurrencyConverter extends React.Component {
   constructor(props) {
     super(props);
+
+    const params = new URLSearchParams(props.location.search);
+
     this.state = {
-      base: 'EUR',
-      compare: 'USD',
-      amount: '',
-      rate: '',
-      reverseRate: '',
-      currencies: [
-        {
-          code: '',
-          name: ''
-        }
-      ],
-      rates: [
-        {
-          currency: '',
-          rate: ''
-        }
-      ]
-    }
-    
+      amount: 0,
+      rate: 0,
+      baseAcronym: params.get('base') || 'EUR',
+      baseValue: 0,
+      quoteAcronym: params.get('quote') || 'USD',
+      quoteValue: 0,
+      loading: false,
+    };
     this.handleChange = this.handleChange.bind(this);
-    this.handleCurrencyChange = this.handleCurrencyChange.bind(this);
-  }
-  // Get amount value from input
-  handleChange(event) {
-    this.setState({ amount: event.target.value });
+
   }
 
-  // Get Currency base compare and amount 
-  handleCurrencyChange (base, compare, amount){
-    this.setState({base, compare, amount})
-    fetch(`https://altexchangerateapi.herokuapp.com/latest?${amount}&from=${base}&to=${compare}`)
-      .then(checkStatus)
-      .then(json)
-      .then((data) => {
-        if (data.response === 'False') {
-          throw new Error(data.Error);
-        }
+  componentDidMount() {
+       const { baseAcronym, quoteAcronym } = this.state;
+        this.getRate(baseAcronym, quoteAcronym);
+   
+}
+// Get amount value from Input
+handleChange(event) {
+  this.setState({ amount: event.target.value });
+}
 
-        if (data.response === 'True') {
-        }
-      })
-      .catch((error) => {
-        this.setState({ error: error.message });
-        console.log(error);
-      })
-  }
+  getRate = (base, quote) => {
+    this.setState({ loading: true });
+    fetch(`https://www.frankfurter.app/latest?base=${base}&symbols=${quote}`)
+    .then(checkStatus)
+    .then(json)
+    .then(data => {
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      const rate = data.rates[quote];
+
+      this.setState({
+        rate,
+        baseValue: 1,
+        quoteValue: Number((1 * rate).toFixed(3)),
+        loading: false,
+      });
+    })
+    .catch(error => console.error(error.message));
+}
+
+
+changeBaseAcronym = (event) => {
+const baseAcronym = event.target.value;
+this.setState({ baseAcronym });
+this.getRate(baseAcronym, this.state.quoteAcronym);
+this.getHistoricalRates(baseAcronym, this.state.quoteAcronym);
+}
+
+changeBaseValue = (event) => {
+const quoteValue = this.convert(event.target.value, this.state.rate, this.toQuote);
+this.setState({
+  baseValue: event.target.value,
+  quoteValue,
+});
+}
+
+changeQuoteAcronym = (event) => {
+const quoteAcronym = event.target.value;
+this.setState({ quoteAcronym });
+this.getRate(this.state.baseAcronym, quoteAcronym);
+this.getHistoricalRates(this.state.baseAcronym, quoteAcronym);
+}
+
+changeQuoteValue = (event) => {
+const baseValue = this.convert(event.target.value, this.state.rate, this.toBase);
+this.setState({
+  quoteValue: event.target.value,
+  baseValue,
+});
+}
 
   render() {
-    const { base, compare, amount, error } = this.state;
+    const { amount, baseAcronym, quoteAcronym } = this.state;
+
+    const currencyOptions = Object.keys(currencies).map(currencyAcronym => <option key={currencyAcronym} value={currencyAcronym}>{currencyAcronym} - {currencies[currencyAcronym].name}</option>);
+    
     return (
       <div className="container main-page-title">
         <div className="row mt-5">
@@ -66,7 +104,7 @@ class Currency extends React.Component {
             <div className="container mt-1">
               <div className="row ms-1 me-1 shadow-lg p-3 bg-body rounded-top border border-1 border-dark" id="title-div">
                 <div className="col-12">
-                  <h5 className="text-center main-content-subtitle">{base} to {compare} and {amount}</h5>
+                  <h5 className="text-center main-content-subtitle">{baseAcronym} to {quoteAcronym}</h5>
               </div>
         </div>
     </div>
@@ -74,45 +112,12 @@ class Currency extends React.Component {
               <div className="row ms-1 me-1 shadow-lg p-3 bg-body border-top border-1 border-dark" id="split-content">
                 <div className="col-lg-3">
                   <label>Amount</label>
-                  <input type="number" className="form-control" min="0" defaultValue={1} value={amount}onChange={this.handleChange}/>
+                  <input type="number" className="form-control" min="0" value={amount} onChange={this.handleChange}/>
                   </div>
                   <div className="col-lg-4">
                   <label>From</label>
                   <div className="dropdown">
-                  <select className='form-select'>
-                  <option value="AUD">AUD – Australian Dollar</option>
-                  <option value="BGN">BGN – Bulgarian Lev</option>
-                  <option value="BRL">BRL – Brazilian Real</option>
-                  <option value="CAD">CAD – Canadian Dollar</option>
-                  <option value="CHF">CHF – Swiss Franc</option>
-                  <option value="CNY">CNY – Chinese Renminbi Yuan</option>
-                  <option value="CZK">CZK – Czech Koruna</option>
-                  <option value="DKK">DKK – Danish Krone</option>
-                  <option value="EUR">EUR – Euro</option>
-                  <option value="GBP">GBP – British Pound</option>
-                  <option value="HKD">HKD – Hong Kong Dollar</option>
-                  <option value="HRK">HRK – Croatian Kuna</option>
-                  <option value="HUF">HUF – Hungarian Forint</option>
-                  <option value="IDR">IDR – Indonesian Rupiah</option>
-                  <option value="ILS">ILS – Israeli New Sheqel</option>
-                  <option value="INR">INR – Indian Rupee</option>
-                  <option value="ISK">ISK – Icelandic Króna</option>
-                  <option value="JPY">JPY – Japanese Yen</option>
-                  <option value="KRW">KRW – South Korean Won</option>
-                  <option value="MXN">MXN – Mexican Peso</option>
-                  <option value="MYR">MYR – Malaysian Ringgit</option>
-                  <option value="NOK">NOK – Norwegian Krone</option>
-                  <option value="NZD">NZD – New Zealand Dollar</option>
-                  <option value="PHP">PHP – Philippine Peso</option>
-                  <option value="PLN">PLN – Polish Złoty</option>
-                  <option value="RON">RON – Romanian Leu</option>
-                  <option value="SEK">SEK – Swedish Krona</option>
-                  <option value="SGD">SGD – Singapore Dollar</option>
-                  <option value="THB">THB – Thai Baht</option>
-                  <option value="TRY">TRY – Turkish Lira</option>
-                  <option value="USD">USD – United States Dollar</option>
-                  <option value="ZAR">ZAR – South African Rand</option>
-                    </select>
+                    <select className="form-select" value={baseAcronym} onChange={this.changeBaseAcronym} > {currencyOptions}</select>
                     </div>
                   </div>
                   <div className='col-lg-1 mt-4'>
@@ -121,40 +126,7 @@ class Currency extends React.Component {
                   <div className="col-lg-4">
                   <label>To</label>
                   <div className="dropdown">
-                  <select className='form-select'>
-                  <option value="AUD">AUD – Australian Dollar</option>
-                  <option value="BGN">BGN – Bulgarian Lev</option>
-                  <option value="BRL">BRL – Brazilian Real</option>
-                  <option value="CAD">CAD – Canadian Dollar</option>
-                  <option value="CHF">CHF – Swiss Franc</option>
-                  <option value="CNY">CNY – Chinese Renminbi Yuan</option>
-                  <option value="CZK">CZK – Czech Koruna</option>
-                  <option value="DKK">DKK – Danish Krone</option>
-                  <option value="EUR">EUR – Euro</option>
-                  <option value="GBP">GBP – British Pound</option>
-                  <option value="HKD">HKD – Hong Kong Dollar</option>
-                  <option value="HRK">HRK – Croatian Kuna</option>
-                  <option value="HUF">HUF – Hungarian Forint</option>
-                  <option value="IDR">IDR – Indonesian Rupiah</option>
-                  <option value="ILS">ILS – Israeli New Sheqel</option>
-                  <option value="INR">INR – Indian Rupee</option>
-                  <option value="ISK">ISK – Icelandic Króna</option>
-                  <option value="JPY">JPY – Japanese Yen</option>
-                  <option value="KRW">KRW – South Korean Won</option>
-                  <option value="MXN">MXN – Mexican Peso</option>
-                  <option value="MYR">MYR – Malaysian Ringgit</option>
-                  <option value="NOK">NOK – Norwegian Krone</option>
-                  <option value="NZD">NZD – New Zealand Dollar</option>
-                  <option value="PHP">PHP – Philippine Peso</option>
-                  <option value="PLN">PLN – Polish Złoty</option>
-                  <option value="RON">RON – Romanian Leu</option>
-                  <option value="SEK">SEK – Swedish Krona</option>
-                  <option value="SGD">SGD – Singapore Dollar</option>
-                  <option value="THB">THB – Thai Baht</option>
-                  <option value="TRY">TRY – Turkish Lira</option>
-                  <option value="USD">USD – United States Dollar</option>
-                  <option value="ZAR">ZAR – South African Rand</option>
-                </select>
+                  <select className="form-select" value={quoteAcronym} onChange={this.changeQuoteAcronym} > {currencyOptions}</select>
                     </div>
                 </div>
                 </div>
@@ -170,4 +142,4 @@ class Currency extends React.Component {
     )
   }
 }
-export default Currency;
+export default CurrencyConverter;
