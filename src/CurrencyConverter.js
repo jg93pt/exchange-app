@@ -16,16 +16,15 @@ class CurrencyConverter extends React.Component {
       rate: 0,
       baseAcronym: params.get('base') || 'EUR',
       quoteAcronym: params.get('quote') || 'USD',
+      loading: false,
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this); //handle amount change value
   }
 
   // Initial state 
   componentDidMount() {
-       const { amount, baseAcronym, quoteAcronym } = this.state;
-        this.getRate(amount, baseAcronym, quoteAcronym);
-        
-   
+      const { amount, baseAcronym, quoteAcronym } = this.state;
+      this.getRate(amount, baseAcronym, quoteAcronym);
 }
 // Get amount value from Input
 handleChange(event) {
@@ -34,41 +33,45 @@ handleChange(event) {
 
 //Get values and Conversion function
   getRate = (amount, base, quote) => {
-    fetch(`https://${host}/latest?amount=${amount}base=${base}&symbols=${quote}`)
+    fetch(`https://${host}/latest?amount=${amount}&from=${base}&to=${quote}`)
     .then(checkStatus)
     .then(json)
     .then(data => {
       if (data.error) {
         throw new Error(data.error);
       }
-      
-      const rate = data.rates[quote];
+        // Gettting the rates values and setting it up the conversion
+      const rate = data.rates[quote]; 
       this.setState({
-        rate,
-        amount,
-        quoteValue: Number((amount * rate).toFixed(3)),
+        quoteValue: (amount = rate),
       });
     })
     .catch(error => console.error(error.message));
 }
 
+
 //Change dropdown Base currency
 changeBaseAcronym = (event) => {
 const baseAcronym = event.target.value;
 this.setState({ baseAcronym });
-this.getRate(baseAcronym, this.state.quoteAcronym);
+this.getRate(this.state.amount, baseAcronym, this.state.quoteAcronym);
 }
 
 //Change dropdown  Quote currency
 changeQuoteAcronym = (event) => {
 const quoteAcronym = event.target.value;
 this.setState({ quoteAcronym });
-this.getRate(this.state.baseAcronym, quoteAcronym);
+this.getRate(this.state.amount, this.state.baseAcronym, quoteAcronym);
+}
+  
+//Dismount the initial state
+componentWillUnmount() {
+  const { amount, baseAcronym, quoteAcronym } = this.state;
+  this.getRate(amount, baseAcronym, quoteAcronym);
 }
 
-
   render() {
-    const { amount, quoteValue, baseAcronym, quoteAcronym } = this.state;
+    const { amount, quoteValue, baseAcronym, quoteAcronym} = this.state;
 
     const currencyOptions = Object.keys(currencies).map(currencyAcronym => <option key={currencyAcronym} value={currencyAcronym}>{currencyAcronym} - {currencies[currencyAcronym].name}</option>);
     
@@ -97,7 +100,7 @@ this.getRate(this.state.baseAcronym, quoteAcronym);
                   <div className="col-lg-4">
                   <label>From</label>
                   <div className="dropdown">
-                    <select className="form-select" value={baseAcronym} onChange={e => {this.changeBaseAcronym(e); this.getRate(e)}}> {currencyOptions}</select>
+                    <select className="form-select"  value={baseAcronym} onChange={this.changeBaseAcronym}> {currencyOptions}</select>
                     </div>
                   </div>
                   <div className='col-lg-1 mt-4'>
@@ -106,14 +109,14 @@ this.getRate(this.state.baseAcronym, quoteAcronym);
                   <div className="col-lg-4">
                   <label>To</label>
                   <div className="dropdown">
-                  <select className="form-select" value={quoteAcronym} onChange={e => {this.changeQuoteAcronym(e); this.getRate(e)}}> {currencyOptions}</select>
+                  <select className="form-select" value={quoteAcronym} onChange={this.changeQuoteAcronym}> {currencyOptions}</select>
                     </div>
                 </div>
                 </div>
                 <div className='row ms-1 me-1 shadow-lg p-3 mb-5 bg-body rounded-bottom'>
                   <h5 className="small-currency-title">{amount} {baseAcronym} =</h5>
                   <h3 className="big-currency-title mb-4">{quoteValue} {quoteAcronym}</h3>
-                  <h5 className="small-currency-title">{quoteValue} {quoteAcronym} = {amount} {baseAcronym}</h5>
+                  <h5 className="small-currency-title"></h5>
                 </div>
       </div>
     </div>
