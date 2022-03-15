@@ -16,7 +16,6 @@ class CurrencyConverter extends React.Component {
       rate: 0,
       baseAcronym: params.get('base') || 'EUR',
       quoteAcronym: params.get('quote') || 'USD',
-      loading: false,
     };
     this.handleChange = this.handleChange.bind(this); //handle amount change value
   }
@@ -25,10 +24,6 @@ class CurrencyConverter extends React.Component {
   componentDidMount() {
       const { amount, baseAcronym, quoteAcronym } = this.state;
       this.getRate(amount, baseAcronym, quoteAcronym);
-}
-// Get amount value from Input
-handleChange(event) {
-  this.setState({ amount: event.target.value });
 }
 
 //Get values and Conversion function
@@ -49,6 +44,12 @@ handleChange(event) {
     .catch(error => console.error(error.message));
 }
 
+// Change based on amount the Currency
+handleChange(event) {
+  const amount = event.target.value;
+  this.setState({ amount });
+  this.getRate(amount, this.state.baseAcronym, this.state.quoteAcronym);
+}
 
 //Change dropdown Base currency
 changeBaseAcronym = (event) => {
