@@ -1,6 +1,5 @@
 import React from 'react';
-import currencies from './Currencies';
-import { json, checkStatus } from './utils';
+import { json, checkStatus, currencies } from './utils';
 
 // Global variable for api link
 const host = 'api.frankfurter.app';
@@ -12,21 +11,20 @@ class CurrencyConverter extends React.Component {
     const params = new URLSearchParams(props.location.search);
 
     this.state = {
-      amount: 0,
+      amount: 1,
+      quoteValue: 0,
       rate: 0,
       baseAcronym: params.get('base') || 'EUR',
-      baseValue: 0,
       quoteAcronym: params.get('quote') || 'USD',
-      quoteValue: 0,
-      loading: false,
     };
     this.handleChange = this.handleChange.bind(this);
-
   }
 
+  // Initial state 
   componentDidMount() {
-       const { baseAcronym, quoteAcronym } = this.state;
-        this.getRate(baseAcronym, quoteAcronym);
+       const { amount, baseAcronym, quoteAcronym } = this.state;
+        this.getRate(amount, baseAcronym, quoteAcronym);
+        
    
 }
 // Get amount value from Input
@@ -34,61 +32,43 @@ handleChange(event) {
   this.setState({ amount: event.target.value });
 }
 
-  getRate = (base, quote) => {
-    this.setState({ loading: true });
-    fetch(`https://www.frankfurter.app/latest?base=${base}&symbols=${quote}`)
+//Get values and Conversion function
+  getRate = (amount, base, quote) => {
+    fetch(`https://${host}/latest?amount=${amount}base=${base}&symbols=${quote}`)
     .then(checkStatus)
     .then(json)
     .then(data => {
       if (data.error) {
         throw new Error(data.error);
       }
-
+      
       const rate = data.rates[quote];
-
       this.setState({
         rate,
-        baseValue: 1,
-        quoteValue: Number((1 * rate).toFixed(3)),
-        loading: false,
+        amount,
+        quoteValue: Number((amount * rate).toFixed(3)),
       });
     })
     .catch(error => console.error(error.message));
 }
 
-
+//Change dropdown Base currency
 changeBaseAcronym = (event) => {
 const baseAcronym = event.target.value;
 this.setState({ baseAcronym });
 this.getRate(baseAcronym, this.state.quoteAcronym);
-this.getHistoricalRates(baseAcronym, this.state.quoteAcronym);
 }
 
-changeBaseValue = (event) => {
-const quoteValue = this.convert(event.target.value, this.state.rate, this.toQuote);
-this.setState({
-  baseValue: event.target.value,
-  quoteValue,
-});
-}
-
+//Change dropdown  Quote currency
 changeQuoteAcronym = (event) => {
 const quoteAcronym = event.target.value;
 this.setState({ quoteAcronym });
 this.getRate(this.state.baseAcronym, quoteAcronym);
-this.getHistoricalRates(this.state.baseAcronym, quoteAcronym);
 }
 
-changeQuoteValue = (event) => {
-const baseValue = this.convert(event.target.value, this.state.rate, this.toBase);
-this.setState({
-  quoteValue: event.target.value,
-  baseValue,
-});
-}
 
   render() {
-    const { amount, baseAcronym, quoteAcronym } = this.state;
+    const { amount, quoteValue, baseAcronym, quoteAcronym } = this.state;
 
     const currencyOptions = Object.keys(currencies).map(currencyAcronym => <option key={currencyAcronym} value={currencyAcronym}>{currencyAcronym} - {currencies[currencyAcronym].name}</option>);
     
@@ -117,7 +97,7 @@ this.setState({
                   <div className="col-lg-4">
                   <label>From</label>
                   <div className="dropdown">
-                    <select className="form-select" value={baseAcronym} onChange={this.changeBaseAcronym} > {currencyOptions}</select>
+                    <select className="form-select" value={baseAcronym} onChange={e => {this.changeBaseAcronym(e); this.getRate(e)}}> {currencyOptions}</select>
                     </div>
                   </div>
                   <div className='col-lg-1 mt-4'>
@@ -126,14 +106,14 @@ this.setState({
                   <div className="col-lg-4">
                   <label>To</label>
                   <div className="dropdown">
-                  <select className="form-select" value={quoteAcronym} onChange={this.changeQuoteAcronym} > {currencyOptions}</select>
+                  <select className="form-select" value={quoteAcronym} onChange={e => {this.changeQuoteAcronym(e); this.getRate(e)}}> {currencyOptions}</select>
                     </div>
                 </div>
                 </div>
                 <div className='row ms-1 me-1 shadow-lg p-3 mb-5 bg-body rounded-bottom'>
-                  <h5 className="small-currency-title">1 AUD =</h5>
-                  <h3 className="big-currency-title mb-4">1.3024 BGN</h3>
-                  <h5 className="small-currency-title">1 BGN = 1.3024 BGN</h5>
+                  <h5 className="small-currency-title">{amount} {baseAcronym} =</h5>
+                  <h3 className="big-currency-title mb-4">{quoteValue} {quoteAcronym}</h3>
+                  <h5 className="small-currency-title">{quoteValue} {quoteAcronym} = {amount} {baseAcronym}</h5>
                 </div>
       </div>
     </div>
