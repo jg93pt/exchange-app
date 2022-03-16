@@ -1,8 +1,9 @@
 import React from 'react';
 import { json, checkStatus, currencies } from './utils';
 
-// Global variable for api link
+// Global variables
 const host = 'api.frankfurter.app';
+let bool = 0;
 
 class CurrencyConverter extends React.Component {
   constructor(props) {
@@ -17,7 +18,10 @@ class CurrencyConverter extends React.Component {
       baseAcronym: params.get('base') || 'EUR',
       quoteAcronym: params.get('quote') || 'USD',
     };
-    this.handleChange = this.handleChange.bind(this); //handle amount change value
+    this.BaseSelected = 'EUR';
+    this.QuoteSelected = 'USD';
+    this.handleChange = this.handleChange.bind(this); 
+    this.handleSwapValuesChangeData = this.handleSwapValuesChangeData.bind(this);
   }
 
   // Initial state 
@@ -54,6 +58,7 @@ handleChange(event) {
 //Change dropdown Base currency
 changeBaseAcronym = (event) => {
 const baseAcronym = event.target.value;
+this.BaseSelected = event.target.value;
 this.setState({ baseAcronym });
 this.getRate(this.state.amount, baseAcronym, this.state.quoteAcronym);
 }
@@ -61,15 +66,35 @@ this.getRate(this.state.amount, baseAcronym, this.state.quoteAcronym);
 //Change dropdown  Quote currency
 changeQuoteAcronym = (event) => {
 const quoteAcronym = event.target.value;
+this.QuoteSelected = event.target.value;
 this.setState({ quoteAcronym });
 this.getRate(this.state.amount, this.state.baseAcronym, quoteAcronym);
 }
+
+//Swap Base and Quote button
+handleSwapValuesChangeData = function (baseAcronym, quoteAcronym)  {
+  // If base !== quote
+  if (bool == 0)
+  {
+    baseAcronym = this.QuoteSelected;
+   quoteAcronym = this.BaseSelected;
+  this.setState({ baseAcronym, quoteAcronym });
+  this.getRate(this.state.amount, baseAcronym, quoteAcronym);
+  bool = 1;
+  }
+
+  //If base == quote
+  else if (bool == 1) {
+    console.log("yo");
+    baseAcronym = this.BaseSelected;
+    quoteAcronym = this.QuoteSelected;
+    this.setState({ baseAcronym, quoteAcronym });
+    this.getRate(this.state.amount, baseAcronym, quoteAcronym);
+    bool = 0;
+  }
   
-//Dismount the initial state
-componentWillUnmount() {
-  const { amount, baseAcronym, quoteAcronym } = this.state;
-  this.getRate(amount, baseAcronym, quoteAcronym);
 }
+  
 
   render() {
     const { amount, quoteValue, baseAcronym, quoteAcronym} = this.state;
@@ -105,7 +130,7 @@ componentWillUnmount() {
                     </div>
                   </div>
                   <div className='col-lg-1 mt-4'>
-                    <button className="form-control exchange-button"><svg  stroke="currentColor" fill="currentColor" strokeWidth="0" height="2em" viewBox="0 0 512 512" className="desktopIcon" xmlns="http://www.w3.org/2000/svg"><path fill="none" strokeLinecap="square" strokeMiterlimit="10" strokeWidth="32" d="M304 48l112 112-112 112m94.87-112H96m112 304L96 352l112-112m-94 112h302"></path></svg></button>
+                    <button className="form-control exchange-button" onClick={this.handleSwapValuesChangeData}><svg  stroke="currentColor" fill="currentColor" strokeWidth="0" height="2em" viewBox="0 0 512 512" className="desktopIcon" xmlns="http://www.w3.org/2000/svg"><path fill="none" strokeLinecap="square" strokeMiterlimit="10" strokeWidth="32" d="M304 48l112 112-112 112m94.87-112H96m112 304L96 352l112-112m-94 112h302"></path></svg></button>
                   </div>
                   <div className="col-lg-4">
                   <label>To</label>
@@ -117,7 +142,7 @@ componentWillUnmount() {
                 <div className='row ms-1 me-1 shadow-lg p-3 mb-5 bg-body rounded-bottom'>
                   <h5 className="small-currency-title">{amount} {baseAcronym} =</h5>
                   <h3 className="big-currency-title mb-4">{quoteValue} {quoteAcronym}</h3>
-                  <h5 className="small-currency-title"></h5>
+                  <h5 className="small-currency-title" ></h5>
                 </div>
       </div>
     </div>
