@@ -1,0 +1,34 @@
+/*Main Content Exchange-Rate*/
+.exchange-subtitle{
+  color:white;
+  font-weight: bolder;
+}
+
+#AllCurrencys, #CurrentCurrency{
+  border-radius: 20px;
+}
+
+@media (min-width: 992px) {
+  #AllCurrencys{
+  margin-left: 3rem !important;
+ }
+ #CurrentCurrency{
+   max-height: 210px;
+ }
+}
+
+@media (max-width: 991px) {
+  #AllCurrencys{
+  margin-top: 3rem !important;
+ }
+
+ .lg-only{
+   display: none;
+ }
+}
+
+.currency-name{
+  font-size: medium;
+}
+
+
