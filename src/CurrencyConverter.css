@@ -1,13 +1,4 @@
 /*Main-content Currency Converter*/
-@media  (max-width: 767px) {
-  .sm-screen{
-    margin-top: 50px;
-  }
-
-  .main-page-title{
-    margin-top:70px;
-  }
-}
 
 @media (min-width: 768px) {
   .main-page-title{
@@ -79,3 +70,8 @@ label{
   }
 }
 
+/*Invisible Div for that the Footer sticks at the Bottom*/
+
+.invisible-div{
+
+}

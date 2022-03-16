@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import CurrencyConverter from './CurrencyConverter';
 import ExchangeRate from './ExchangeRate';
-
+import Footer from './Footer';
 import './App.css';
 
 
@@ -31,6 +31,7 @@ class App extends Component {
 
   render () {
   return (
+    <React.Fragment>
     <Router>
     <nav className="navbar navbar-expand-md navbar-light shadow p-3 mb-5 rounded" id="navColor">
       <div className="container-fluid ms-5">
@@ -50,6 +51,9 @@ class App extends Component {
         <Route path="/CurrencyConverter" exact component={CurrencyConverter} />
         <Route path="/ExchangeRate" component={ExchangeRate} />
     </Router>
+    <Footer/>
+    </React.Fragment>
+  
   );
 }
 }
