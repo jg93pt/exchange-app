@@ -32,7 +32,7 @@ class App extends Component {
   render () {
   return (
     <Router>
-    <nav className="navbar navbar-expand-md navbar-light shadow p-3 mb-5 rounded fixed-top" id="navColor">
+    <nav className="navbar navbar-expand-md navbar-light shadow p-3 mb-5 rounded" id="navColor">
       <div className="container-fluid ms-5">
         <div id="navbarNav">
           <ul className="navbar-nav">

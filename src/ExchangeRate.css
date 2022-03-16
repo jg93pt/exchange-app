@@ -11,6 +11,7 @@
 @media (min-width: 992px) {
   #AllCurrencys{
   margin-left: 3rem !important;
+  font-size: x-large;
  }
  #CurrentCurrency{
    max-height: 210px;
@@ -25,10 +26,25 @@
  .lg-only{
    display: none;
  }
+
+}
+
+.main-title{
+  font-size: xxx-large;
+}
+
+.exchange-subtitle{
+  font-size: xx-large;
+}
+
+label{
+  font-size: large;
 }
 
 .currency-name{
-  font-size: medium;
+  font-size: large;
 }
+
+
 
 

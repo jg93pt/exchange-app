@@ -72,7 +72,7 @@ this.getRates(this.state.amount, baseAcronym);
       <div className="container main-page-title">
       <div className="row mt-5">
         <div className="col-12 mt-5 text-center">
-        <h1 className="sm-screen">Exchange Rates</h1>
+        <h1 className="sm-screen main-title">Exchange Rates</h1>
         <h3 className='mt-4 sm-screen exchange-subtitle'>{amount} {baseAcronym}</h3>
         <div className="mt-5 container-xxl">
               <div className="row">
