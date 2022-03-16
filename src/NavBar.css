@@ -3,11 +3,13 @@
   background-color: #5B86E5;
 
 }
-.nav-item:hover {
+
+@media (min-width: 992px) {
+  .nav-item:hover {
   background: #36D1DC;
   border-radius: 10px;
+  }
 }
-
 
 .focus-item {
   color: #fff!important;

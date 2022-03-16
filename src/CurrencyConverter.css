@@ -56,12 +56,26 @@ label{
 
 .small-currency-title{
   opacity: 0.5;
-  font-size: medium;
+  font-size: large;
   font-weight: bold;
 }
 
 .big-currency-title{
   font-weight: bold;
+  font-size: x-large;
 }
 
+.main-title{
+  font-size: xxx-large;
+}
+
+.main-content-subtitle{
+  font-size: xx-large;
+}
+
+@media (max-width: 317px) {
+  .main-content-subtitle{
+    font-size: x-large;
+  }
+}
 
