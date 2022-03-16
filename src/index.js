@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
-import './NavBar.css'
-import './CurrencyConverter.css'
-import './ExchangeRate.css'
+import './NavBar.css';
+import './CurrencyConverter.css';
+import './ExchangeRate.css';
+import './Footer.css';
 
 import './index.css';
 import App from './App';
