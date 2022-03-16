@@ -1,8 +1,9 @@
 import React from 'react';
 import { json, checkStatus, currencies } from './utils';
 
-// Global variable
+// Global variables
 const host = 'api.frankfurter.app';
+let bool = 0;
 
 class CurrencyConverter extends React.Component {
   constructor(props) {
@@ -72,11 +73,26 @@ this.getRate(this.state.amount, this.state.baseAcronym, quoteAcronym);
 
 //Swap Base and Quote button
 handleSwapValuesChangeData = function (baseAcronym, quoteAcronym)  {
-  baseAcronym = this.QuoteSelected;
-  quoteAcronym = this.BaseSelected;
+  // If base !== quote
+  if (bool == 0)
+  {
+    baseAcronym = this.QuoteSelected;
+   quoteAcronym = this.BaseSelected;
   this.setState({ baseAcronym, quoteAcronym });
-  //console.log(BaseSelected, QuoteSelected);
   this.getRate(this.state.amount, baseAcronym, quoteAcronym);
+  bool = 1;
+  }
+
+  //If base == quote
+  else if (bool == 1) {
+    console.log("yo");
+    baseAcronym = this.BaseSelected;
+    quoteAcronym = this.QuoteSelected;
+    this.setState({ baseAcronym, quoteAcronym });
+    this.getRate(this.state.amount, baseAcronym, quoteAcronym);
+    bool = 0;
+  }
+  
 }
   
 
