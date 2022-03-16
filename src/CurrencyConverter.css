@@ -1,13 +1,4 @@
 /*Main-content Currency Converter*/
-@media  (max-width: 767px) {
-  .sm-screen{
-    margin-top: 50px;
-  }
-
-  .main-page-title{
-    margin-top:70px;
-  }
-}
 
 @media (min-width: 768px) {
   .main-page-title{
@@ -77,5 +68,9 @@ label{
   .main-content-subtitle{
     font-size: x-large;
   }
+}
+
+.sticky-footer{
+  padding-top: 60vh;
 }
 

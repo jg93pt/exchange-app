@@ -140,6 +140,8 @@ handleSwapValuesChangeData = function (baseAcronym, quoteAcronym)  {
                   <h5 className="small-currency-title">{amount} {baseAcronym} =</h5>
                   <h3 className="big-currency-title mb-4">{quoteValue} {quoteAcronym}</h3>
                 </div>
+                <div class="sticky-footer">
+                </div>
       </div>
     </div>
   </div>
