@@ -86,7 +86,7 @@ this.getRates(this.state.amount, baseAcronym);
                     <select className="form-select" value={baseAcronym} onChange={this.changeBaseAcronym}> {currencyOptions}</select>
                     </div>
                 </div>
-                <div className="col-lg-7 shadow-lg p-3 bg-body mb-5" id="AllCurrencys">
+                <div className="col-lg-7 shadow-lg p-5 bg-body mb-5 pb-5" id="AllCurrencys">
                 <table className="table table-responsive">
                   <tbody>
                   {rates?.map(currency =>

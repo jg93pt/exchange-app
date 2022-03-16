@@ -4,6 +4,10 @@
   font-weight: bolder;
 }
 
+#AllCurrencys{
+  margin-bottom: 15rem!important;
+}
+
 #AllCurrencys, #CurrentCurrency{
   border-radius: 20px;
 }
