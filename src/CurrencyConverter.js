@@ -94,7 +94,7 @@ handleSwapValuesChangeData = function (baseAcronym, quoteAcronym)  {
 }
   
   render() {
-    const { amount, quoteValue, baseAcronym, quoteAcronym, QuoteValueSelected} = this.state;
+    const { amount, quoteValue, baseAcronym, quoteAcronym} = this.state;
 
     const currencyOptions = Object.keys(currencies).map(currencyAcronym => <option key={currencyAcronym} value={currencyAcronym}>{currencyAcronym} - {currencies[currencyAcronym].name}</option>);
     

@@ -12,12 +12,23 @@
   #AllCurrencys{
   margin-left: 3rem !important;
  }
+ #CurrentCurrency{
+   max-height: 210px;
+ }
 }
 
 @media (max-width: 991px) {
   #AllCurrencys{
   margin-top: 3rem !important;
  }
+
+ .lg-only{
+   display: none;
+ }
+}
+
+.currency-name{
+  font-size: medium;
 }
 
 
