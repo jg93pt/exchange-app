@@ -20,6 +20,7 @@ class CurrencyConverter extends React.Component {
     };
     this.BaseSelected = 'EUR';
     this.QuoteSelected = 'USD';
+    this.QuoteValueSelected = 0;
     this.handleChange = this.handleChange.bind(this); 
     this.handleSwapValuesChangeData = this.handleSwapValuesChangeData.bind(this);
   }
@@ -40,9 +41,9 @@ class CurrencyConverter extends React.Component {
         throw new Error(data.error);
       }
         // Gettting the rates values and setting it up the conversion
-      const rate = data.rates[quote]; 
+      const rate = data.rates[quote];
       this.setState({
-        quoteValue: (amount = rate),
+        quoteValue: (amount * rate),
       });
     })
     .catch(error => console.error(error.message));
@@ -74,30 +75,26 @@ this.getRate(this.state.amount, this.state.baseAcronym, quoteAcronym);
 //Swap Base and Quote button
 handleSwapValuesChangeData = function (baseAcronym, quoteAcronym)  {
   // If base !== quote
-  if (bool == 0)
-  {
-    baseAcronym = this.QuoteSelected;
+  if (bool == 0) {
+   baseAcronym = this.QuoteSelected;
    quoteAcronym = this.BaseSelected;
-  this.setState({ baseAcronym, quoteAcronym });
+  this.setState({ baseAcronym, quoteAcronym});
   this.getRate(this.state.amount, baseAcronym, quoteAcronym);
   bool = 1;
   }
 
   //If base == quote
   else if (bool == 1) {
-    console.log("yo");
     baseAcronym = this.BaseSelected;
     quoteAcronym = this.QuoteSelected;
     this.setState({ baseAcronym, quoteAcronym });
     this.getRate(this.state.amount, baseAcronym, quoteAcronym);
     bool = 0;
-  }
-  
+  } 
 }
   
-
   render() {
-    const { amount, quoteValue, baseAcronym, quoteAcronym} = this.state;
+    const { amount, quoteValue, baseAcronym, quoteAcronym, QuoteValueSelected} = this.state;
 
     const currencyOptions = Object.keys(currencies).map(currencyAcronym => <option key={currencyAcronym} value={currencyAcronym}>{currencyAcronym} - {currencies[currencyAcronym].name}</option>);
     
@@ -142,7 +139,6 @@ handleSwapValuesChangeData = function (baseAcronym, quoteAcronym)  {
                 <div className='row ms-1 me-1 shadow-lg p-3 mb-5 bg-body rounded-bottom'>
                   <h5 className="small-currency-title">{amount} {baseAcronym} =</h5>
                   <h3 className="big-currency-title mb-4">{quoteValue} {quoteAcronym}</h3>
-                  <h5 className="small-currency-title" ></h5>
                 </div>
       </div>
     </div>
