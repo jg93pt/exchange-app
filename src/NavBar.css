@@ -3,10 +3,11 @@
   background-color: #5B86E5;
 
 }
-#navbarNav > ul > li:hover {
+.nav-item:hover {
   background: #36D1DC;
   border-radius: 10px;
 }
+
 
 .focus-item {
   color: #fff!important;
