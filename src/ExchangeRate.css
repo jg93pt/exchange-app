@@ -3,15 +3,12 @@
   color:white;
   font-weight: bolder;
 }
-
 #AllCurrencys{
   margin-bottom: 15rem!important;
 }
-
 #AllCurrencys, #CurrentCurrency{
   border-radius: 20px;
 }
-
 @media (min-width: 992px) {
   #AllCurrencys{
   margin-left: 3rem !important;
@@ -21,30 +18,24 @@
    max-height: 210px;
  }
 }
-
 @media (max-width: 991px) {
   #AllCurrencys{
   margin-top: 3rem !important;
  }
-
  .lg-only{
    display: none;
  }
 
 }
-
 .main-title{
   font-size: xxx-large;
 }
-
 .exchange-subtitle{
   font-size: xx-large;
 }
-
 label{
   font-size: large;
 }
-
 .currency-name{
   font-size: large;
 }
