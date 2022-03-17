@@ -1,5 +1,7 @@
 import React from 'react';
 import { json, checkStatus, currencies } from './utils';
+import Chart from 'chart.js/auto';
+import { Redirect } from 'react-router-dom';
 
 // Global variables
 const host = 'api.frankfurter.app';
@@ -18,6 +20,7 @@ class CurrencyConverter extends React.Component {
       baseAcronym: params.get('base') || 'EUR',
       quoteAcronym: params.get('quote') || 'USD',
     };
+    this.chartRef = React.createRef();
     this.BaseSelected = 'EUR';
     this.QuoteSelected = 'USD';
     this.QuoteValueSelected = 0;
@@ -29,6 +32,7 @@ class CurrencyConverter extends React.Component {
   componentDidMount() {
     const { amount, baseAcronym, quoteAcronym } = this.state;
     this.getRate(amount, baseAcronym, quoteAcronym);
+    this.getHistoricalRates(baseAcronym, quoteAcronym);
   }
 
   //Get values and Conversion function
@@ -63,6 +67,7 @@ class CurrencyConverter extends React.Component {
     this.BaseSelected = event.target.value;
     this.setState({ baseAcronym });
     this.getRate(this.state.amount, baseAcronym, this.state.quoteAcronym);
+    this.getHistoricalRates(baseAcronym, this.state.quoteAcronym);
   }
 
   //Change dropdown  Quote currency
@@ -71,6 +76,7 @@ class CurrencyConverter extends React.Component {
     this.QuoteSelected = event.target.value;
     this.setState({ quoteAcronym });
     this.getRate(this.state.amount, this.state.baseAcronym, quoteAcronym);
+    this.getHistoricalRates(this.state.baseAcronym, quoteAcronym);
   }
 
   //Swap Base and Quote button
@@ -81,6 +87,7 @@ class CurrencyConverter extends React.Component {
       quoteAcronym = this.BaseSelected;
       this.setState({ baseAcronym, quoteAcronym });
       this.getRate(this.state.amount, baseAcronym, quoteAcronym);
+      this.getHistoricalRates(baseAcronym, quoteAcronym);
       bool = 1;
     }
 
@@ -90,8 +97,54 @@ class CurrencyConverter extends React.Component {
       quoteAcronym = this.QuoteSelected;
       this.setState({ baseAcronym, quoteAcronym });
       this.getRate(this.state.amount, baseAcronym, quoteAcronym);
+      this.getHistoricalRates(baseAcronym, quoteAcronym);
       bool = 0;
     }
+  }
+
+  //To Build Chart and Fetch history Data
+  getHistoricalRates = (base, quote) => {
+    const endDate = new Date().toISOString().split('T')[0];
+    const startDate = new Date((new Date).getTime() - (30 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0];
+    fetch(`https://${host}/${startDate}..${endDate}?from=${base}&to=${quote}`)
+      .then(checkStatus)
+      .then(json)
+      .then(data => {
+        if (data.error) {
+          throw new Error(data.error);
+        }
+        const chartLabels = Object.keys(data.rates);
+        const chartData = Object.values(data.rates).map(rate => rate[quote]);
+        const chartLabel = `${base}/${quote}`;
+        this.buildChart(chartLabels, chartData, chartLabel);
+      })
+      .catch(error => console.error(error.message));
+  }
+  buildChart = (labels, data, label) => {
+    const chartRef = this.chartRef.current.getContext("2d");
+    if (typeof this.chart !== "undefined") {
+      this.chart.destroy();
+    }
+    this.chart = new Chart(this.chartRef.current.getContext("2d"), {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          {
+            label: label,
+            data,
+            fill: false,
+            tension: 0,
+            pointBackgroundColor: '#FFF',
+            backgroundColor: '#FFF',
+            borderColor: '#5B86E5',
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+      }
+    })
   }
 
   render() {
@@ -142,9 +195,12 @@ class CurrencyConverter extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className='row ms-1 me-1 shadow-lg p-3 mb-5 bg-body rounded-bottom'>
+              <div className='row ms-1 me-1 shadow-lg p-3 bg-body rounded-bottom'>
                 <h5 className="small-currency-title">{amount} {baseAcronym} =</h5>
                 <h3 className="big-currency-title mb-4">{quoteValue.toFixed(6)} {quoteAcronym}</h3>
+              </div>
+              <div className="ms-1 me-1 shadow-lg mt-5 p-3 bg-body">
+                <canvas ref={this.chartRef} />
               </div>
               <div class="sticky-footer">
               </div>

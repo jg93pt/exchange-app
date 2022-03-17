@@ -13,7 +13,6 @@ class Exchange extends React.Component {
       amount: 1,
       rates: null,
       baseAcronym: params.get('base') || 'EUR',
-      loading: true,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -42,7 +41,7 @@ class Exchange extends React.Component {
             rate: data.rates[acronym],
             name: currencies[acronym].name,
           }))
-          this.setState({ rates, loading: false });
+          this.setState({ rates });
       })
       .catch(error => console.error(error.message));
   }
@@ -63,7 +62,7 @@ class Exchange extends React.Component {
   }
 
   render() {
-    const { amount, baseAcronym, rates, loading } = this.state;
+    const { amount, baseAcronym, rates } = this.state;
 
     const currencyOptions = Object.keys(currencies).map(currencyAcronym => <option key={currencyAcronym} value={currencyAcronym}>{currencyAcronym} - {currencies[currencyAcronym].name}</option>);
 
@@ -78,11 +77,11 @@ class Exchange extends React.Component {
                 <div className="col-lg-4 shadow-lg p-3 bg-body" id="CurrentCurrency">
                   <div className="mt-2 text-start">
                     <label>Amount</label>
-                    <input type="number" className="form-control" min="0" value={amount} onChange={this.handleChange} disabled={loading}/>
+                    <input type="number" className="form-control" min="0" value={amount} onChange={this.handleChange}/>
                   </div>
                   <div className="text-start mt-4 mb-2">
                     <label>From</label>
-                    <select className="form-select" value={baseAcronym} onChange={this.changeBaseAcronym} disabled={loading}> {currencyOptions}</select>
+                    <select className="form-select" value={baseAcronym} onChange={this.changeBaseAcronym}> {currencyOptions}</select>
                   </div>
                 </div>
                 <div className="col-lg-7 shadow-lg p-5 bg-body mb-5 pb-5" id="AllCurrencys">
