@@ -1,75 +1,59 @@
 /*Main-content Currency Converter*/
-
 @media (min-width: 768px) {
   .main-page-title{
   margin-top: 100px;
   }
 }
-
 #title-div{
   background: #36D1DC;
   background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);
   background: linear-gradient(to right, #5B86E5, #36D1DC);
 }
-
 #split-content{
   border-bottom: 1px solid #dee2e6 !important;
 }
-
 h1, .main-content-subtitle{
   color: white;
   font-weight: bolder;
 }
-
 label{
   font-weight: bold;
 }
-
-
 .exchange-button{
 
   background: #5B86E5;
   border-radius: 10px;
   height: 88%;
 }
-
 .exchange-button:hover{
   background: #36D1DC;
 }
-
 .exchange-button:focus{
   background: #5B86E5;
 }
-
 .desktopIcon{
   color:whitesmoke;
 }
-
 .small-currency-title{
   opacity: 0.5;
   font-size: large;
   font-weight: bold;
 }
-
 .big-currency-title{
   font-weight: bold;
   font-size: x-large;
 }
-
 .main-title{
   font-size: xxx-large;
 }
-
 .main-content-subtitle{
   font-size: xx-large;
 }
-
 @media (max-width: 317px) {
   .main-content-subtitle{
     font-size: x-large;
   }
 }
-
 .sticky-footer{
   padding-top: 60vh;
 }
