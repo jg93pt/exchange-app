@@ -202,7 +202,7 @@ class CurrencyConverter extends React.Component {
               <div className="ms-1 me-1 shadow-lg mt-5 p-3 bg-body">
                 <canvas ref={this.chartRef} />
               </div>
-              <div class="sticky-footer">
+              <div className="sticky-footer">
               </div>
             </div>
           </div>

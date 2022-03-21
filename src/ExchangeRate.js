@@ -89,7 +89,7 @@ class Exchange extends React.Component {
                     <tbody>
                       {rates?.map(currency =>
                         <tr>
-                          <td className="text-start"><b class="me-4">{currency.acronym}</b><small class="lg-only">-</small><small class="mx-4 currency-name lg-only">{currency.name}</small></td>
+                          <td className="text-start"><b className="me-4">{currency.acronym}</b><small className="lg-only">-</small><small className="mx-4 currency-name lg-only">{currency.name}</small></td>
                           <td className="text-end">{currency.rate.toFixed(6)}</td>
                         </tr>
                       )}
